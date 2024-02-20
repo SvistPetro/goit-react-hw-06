@@ -1,8 +1,13 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addContact } from "../../redux/contactsSlice";
 import css from './Form.module.css';
 import { nanoid } from 'nanoid'
 
-const Form = ({onSubmit}) => {
+
+const Form = () => {
+    const dispatch = useDispatch();
+    const contacts = useSelector(state => state.contacts.value)
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
 
@@ -29,7 +34,14 @@ const Form = ({onSubmit}) => {
         const formName = name.trim().toString();
         const formNumber = number.trim().toString();
         const finalFormData = {id, name: formName, number: formNumber};
-        onSubmit(finalFormData);
+
+        const duplicate = contacts.some(contact => contact.name.toLowerCase() === formName.toLowerCase());
+        if(duplicate) {
+          alert(`${formName} is already in contacts`);
+          return;
+        }
+
+        dispatch(addContact(finalFormData));
         reset();
     }
 

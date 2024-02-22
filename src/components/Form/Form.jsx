@@ -7,7 +7,7 @@ import { nanoid } from 'nanoid'
 
 const Form = () => {
     const dispatch = useDispatch();
-    const contacts = useSelector(state => state.contacts.value)
+    const contacts = useSelector(state => state.contacts)
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
 

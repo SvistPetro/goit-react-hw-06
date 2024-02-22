@@ -1,17 +1,12 @@
 // import { useState, useEffect, useRef } from "react"
+import { useSelector } from 'react-redux'
 import Form from './components/Form/Form'
 import ContactList from './components/ContactList/ContactList'
 import Filter from './components/Filter/Filter'
-import { useSelector } from "react-redux"
 
 
 const App = () => {
-  const filter = useSelector(state => state.filters.value);
-  const contacts = useSelector(state => state.contacts.value)
-  console.log(contacts);
-  console.log(filter);
-  
-  // const [contacts, setContacts] = useState([]);
+  const contacts = useSelector(state => state.contacts);
 
   // const firstRender = useRef(false);
 
@@ -48,12 +43,13 @@ const App = () => {
   //   firstRender.current = true;
   // }
 
-  const handleFilteredContacts = () => {
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  }
- 
+//   const handleFilteredContacts = () => {
+//     const filteredContacts = contacts.filter(contact =>
+//      contact.name.toLowerCase().includes(filter.toLowerCase())
+//    );
+//    return filteredContacts;
+//  }
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -63,13 +59,11 @@ const App = () => {
       {contacts.length > 0 ? (
           <>
             <Filter />
-            <ContactList contacts={handleFilteredContacts()} onDelete={() => {}}/>
-          </>
-        ) : (
+            <ContactList onDelete={() => {}}/>
+          </>) : (
           <p>Your phonebook is empty. Add first contact!</p>
         )
       }
-      
     </div>
   )
 }
